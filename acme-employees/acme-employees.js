@@ -38,7 +38,7 @@ spacer('findManagerFor Shep Jr.')
 //given an employee and a list of employees, return the employee who is the manager
 function findManagerFor(employee, employees) {
 
- let manager;
+let manager;
     console.log(employee)
 
     console.log(employee['managerId'])
@@ -56,28 +56,78 @@ function findManagerFor(employee, employees) {
 console.log(findManagerFor(findEmployeeByName('shep Jr.', employees), employees));//{ id: 4, name: 'shep', managerId: 2 }
 spacer('')
 
-// spacer('findCoworkersFor Larry')
+spacer('findCoworkersFor Larry')
 
-// //given an employee and a list of employees, return the employees who report to the same manager
-// console.log(findCoworkersFor(findEmployeeByName('larry', employees), employees));/*
-// [ { id: 3, name: 'curly', managerId: 1 },
-//   { id: 99, name: 'lucy', managerId: 1 } ]
-// */
+function findCoworkersFor(employee, employees) {
+    let sameManager = [];
+    
+    
+  
+    employees.forEach(worker => {
+        console.log(worker['managerId'])
+        if (employee !== worker) {
+              
+            if (employee['managerId'] === worker['managerId']) {
+                sameManager.push(worker);
+            }
+        }
+    })
+    
+    return sameManager;
+}
+//given an employee and a list of employees, return the employees who report to the same manager
+console.log(findCoworkersFor(findEmployeeByName('larry', employees), employees));/*
+[ { id: 3, name: 'curly', managerId: 1 },
+  { id: 99, name: 'lucy', managerId: 1 } ]
+*/
 
-// spacer('');
+spacer('');
 
-// spacer('findManagementChain for moe')
-// //given an employee and a list of employees, return a the management chain for that employee. The management chain starts from the employee with no manager with the passed in employees manager 
-// console.log(findManagementChainForEmployee(findEmployeeByName('moe', employees), employees));//[  ]
-// spacer('');
+spacer('findManagementChain for moe')
+//given an employee and a list of employees, return a the management chain for that employee. The management chain starts from the employee with no manager with the passed in employees manager 
 
-// spacer('findManagementChain for shep Jr.')
-// console.log(findManagementChainForEmployee(findEmployeeByName('shep Jr.', employees), employees));/*
-// [ { id: 1, name: 'moe' },
-//   { id: 2, name: 'larry', managerId: 1 },
-//   { id: 4, name: 'shep', managerId: 2 }]
-// */
-// spacer('');
+function findManagementChainForEmployee(employee, employees) {
+    let reportsTo = [];
+    
+    if (employee.name === 'moe') {
+      return [];
+    }
+    
+    else {
+      reportsTo.push(findEmployeeByName('moe',employees))
+    }
+
+    
+    let idNumber = reportsTo.map(worker => worker.id);
+    let mostRecentId = idNumber[0];
+    
+    // we need tok make sure no duplicates are getting in
+     for (let i = 0; i < employees.length; i++) {
+       let worker = employees[i]
+    
+        if (mostRecentId === worker.managerId) {
+      
+          if (worker.name === employee.name) return reportsTo;
+       
+          reportsTo.push(worker)
+          mostRecentId = worker.id;
+        }
+     }
+    
+    
+    return reportsTo;
+}
+
+console.log(findManagementChainForEmployee(findEmployeeByName('moe', employees), employees));//[  ]
+spacer('');
+
+spacer('findManagementChain for shep Jr.')
+console.log(findManagementChainForEmployee(findEmployeeByName('shep Jr.', employees), employees));/*
+[ { id: 1, name: 'moe' },
+  { id: 2, name: 'larry', managerId: 1 },
+  { id: 4, name: 'shep', managerId: 2 }]
+*/
+spacer('');
 
 
 // spacer('generateManagementTree')
