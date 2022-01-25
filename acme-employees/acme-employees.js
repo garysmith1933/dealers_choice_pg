@@ -134,23 +134,46 @@ spacer('generateManagementTree')
 //given a list of employees, generate a tree like structure for the employees, starting with the employee who has no manager. Each employee will have a reports property which is an array of the employees who report directly to them.
 
 function generateManagementTree(employees) {
+  
+  // I do not take credit for this solution as Jacob had posted it in the slack channel. I just have it here to study it better.
   let boss = []
   
   for (let i = 0; i < employees.length; i++) {
     let worker = employees[i]
     
+    // if the worker does not have a manager id, it has to be the boss.
     if (!worker.managerId) {
       boss = worker;
     }
-    
-    // the boss has a reports property that targets the rest of the tree. but I do not how to proceed from here.
-    // boss.reports = ???
+  // added a reports property for boss to equal the result of the callback function that gets other subtrees.
+    boss.reports =  findMinionsForManager(employees, boss);
+   
+    // this is the entire tree
+    const companyHierarchy = boss;
+  return companyHierarchy;
+}
     
   }
   
+  const findMinionsForManager = (employees, manager) => {
+    const subtree = [];
+    
+      // it goes through the array of employees to see who reports directly to the manager/boss
+    employees.filter(person => person.managerId === manager.id)
 
+  //assigns reports property to each employee and recursively calls the function to find their minions
   
+  // for each person that reports to the manager/boss they get a reports property that calls back the function itself to find those below them.
+  .forEach( person => {
+    person.reports = findMinionsForManager(employees, person);
+    // pushes the person object to the array, adding to (both)? the bosses report property and the manager.
+    subtree.push(person);
+  })
+  
+  return subtree;
 }
+  
+
 console.log(JSON.stringify(generateManagementTree(employees), null, 2));
 /*
 {
