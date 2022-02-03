@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
     
         <body>
         
-            <h1 <a href='/'> My Family </h1>
+            <h1 <a href='/'> My Family </a> </h1>
                 <div class = 'container'>
            
                 <ul id ='list'>
@@ -33,9 +33,10 @@ app.get("/", (req, res) => {
                   <li>
                   <a href ="/family/${person.name}"> ${person.name}</a>
                   </li></div>`).join(' ')}
-                
-                </ul>
+                  
                 </div>
+                </ul>
+              
             
             
            
@@ -44,25 +45,34 @@ app.get("/", (req, res) => {
     res.send(html)
 })
 
+
+
+
+
+
+
+
 app.get("/family/:name", (req, res) => {
-    console.log(req.params.name)
+    console.log(req.params)
+  
+    const currentName = req.params.name
+      const person = fam.find(person => person.name === currentName)
     const html = 
     `<html>
     <head>
-        <title> New Page </title>
+        <title> Family </title>
         <link rel ='stylesheet' href = /"styles.css">
     </head>
     
         <body>
         
-            <h1 <a href='/'> My Family </a> </h1>
-         
+         <h1> <a href='/'> My Family </a> </h1>
+        
+           <h1>${currentName}</h1>
            
-                <ul id ='list'>
-                   ${fam.map(person =>`<li><a href ="/family/"${person.name}> ${person.name}</a></li>`).join(' ')}
-                </ul>
-                </div>
-            
+           <p> ${currentName} is my ${person.relation}, who is a ${person.age} year old ${person.gender} who I met in ${person.yearMet}.
+           <b>I love ${currentName}!</b>
+           <p>
             
            
         </body>

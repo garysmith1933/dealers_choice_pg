@@ -1,5 +1,5 @@
 const family = [
-    { name: "Jackie Smith", age: 24, gender: "female", yearMet: 2013, relation: "Spouse"},
+    { name: "Jackie Smith", age: 24, gender: "female", yearMet: 2013, relation: "Wife"},
     {name: "Gary Smith Sr", age: 62, gender: "male", yearMet: 1997, relation: "Father"},
     {name: "Melissa Smith", age: 61, gender: "female", yearMet: 1997, relation: "Mother"},
     {name: "Clinton Smith", age: 42, gender: "female", yearMet: 1997, relation: "Brother"},
